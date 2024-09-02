@@ -100,14 +100,12 @@ jobs:
     needs: [ create-release ]
     strategy:
       matrix:
-        container: [alpine,  debian-bullseye, debian-bookworm ]
+        container: [alpine, debian-bookworm ]
         include:
           - container: alpine
-            platforms: linux/amd64,linux/arm64,linux/arm/v7
-          - container: debian-bullseye
-            platforms: linux/amd64,linux/arm64,linux/arm/v7
+            platforms: linux/amd64,linux/arm64
           - container: debian-bookworm
-            platforms: linux/amd64,linux/arm64,linux/arm/v7
+            platforms: linux/amd64,linux/arm64
 
     steps:
       - name: Checkout
@@ -139,7 +137,7 @@ jobs:
           file: docker/${{ matrix.container }}/Dockerfile.build
           platforms: ${{ matrix.platforms }}
           push: true
-          tags: bpatrik/pigallery2:experimental-${{ matrix.container }}
+          tags: kisaragikamito/pigallery2:experimental-${{ matrix.container }}
       - name: Push edge on new master commit
         # github.ref:  branches the format is refs/heads/<branch_name>  PRs and Tags are different
         if: ${{github.ref == 'refs/heads/master' }}
@@ -149,7 +147,7 @@ jobs:
           file: docker/${{ matrix.container }}/Dockerfile.build
           platforms: ${{ matrix.platforms }}
           push: true
-          tags: bpatrik/pigallery2:edge-${{ matrix.container }}
+          tags: kisaragikamito/pigallery2:edge-${{ matrix.container }}
       - name: Push release on new Tag
         if: ${{ startsWith(github.ref_type , 'tag') &&  !github.event.issue.pull_request &&  matrix.container != 'debian-bookworm'}}
         uses: docker/build-push-action@v5
@@ -159,9 +157,9 @@ jobs:
           platforms: ${{ matrix.platforms }}
           push: true
           tags: |
-            bpatrik/pigallery2:edge-${{ matrix.container }}
-            bpatrik/pigallery2:${{ github.ref_name }}-${{ matrix.container }}
-            bpatrik/pigallery2:latest-${{ matrix.container }}
+            kisaragikamito/pigallery2:edge-${{ matrix.container }}
+            kisaragikamito/pigallery2:${{ github.ref_name }}-${{ matrix.container }}
+            kisaragikamito/pigallery2:latest-${{ matrix.container }}
       - name: Push latest on new Tag
         if: ${{ startsWith(github.ref_type, 'tag') &&  !github.event.issue.pull_request &&  matrix.container == 'debian-bookworm'}}
         uses: docker/build-push-action@v5
@@ -171,8 +169,8 @@ jobs:
           platforms: ${{ matrix.platforms }}
           push: true
           tags: |
-            bpatrik/pigallery2:edge-${{ matrix.container }}
-            bpatrik/pigallery2:${{ github.ref_name }}-${{ matrix.container }}
-            bpatrik/pigallery2:latest-${{ matrix.container }}
-            bpatrik/pigallery2:${{ github.ref_name }}
-            bpatrik/pigallery2:latest
+            kisaragikamito/pigallery2:edge-${{ matrix.container }}
+            kisaragikamito/pigallery2:${{ github.ref_name }}-${{ matrix.container }}
+            kisaragikamito/pigallery2:latest-${{ matrix.container }}
+            kisaragikamito/pigallery2:${{ github.ref_name }}
+            kisaragikamito/pigallery2:latest

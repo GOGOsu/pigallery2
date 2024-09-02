@@ -40,6 +40,7 @@ export enum ScrollUpModes {
 export enum LightBoxTitleTexts {
   NONE = 1,
   file,
+  file_name,
   resolution,
   size,
 

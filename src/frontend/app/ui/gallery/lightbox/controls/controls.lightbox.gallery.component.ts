@@ -495,6 +495,8 @@ export class ControlsLightboxComponent implements OnDestroy, OnInit, OnChanges {
           m.directory.name,
           m.name
         );
+      case LightBoxTitleTexts.file_name:
+        return m.name;
       case LightBoxTitleTexts.resolution:
         return `${m.metadata.size.width}x${m.metadata.size.height}`;
       case LightBoxTitleTexts.size:

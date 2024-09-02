@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl python3 gi
   rm -rf /var/lib/apt/lists/*
 
 # copying only package{-lock}.json to make node_modules cachable
-RUN git clone https://github.com/bpatrik/pigallery2.git /build
+RUN git clone https://github.com/GOGOsu/pigallery2.git /build
 WORKDIR /build
 RUN npm install --unsafe-perm \
     && mkdir -p /build/release/data/config \
